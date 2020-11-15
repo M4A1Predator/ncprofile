@@ -6,12 +6,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node main.js",
-    "transpile": "babel ./src/** --out-dir dist-server",
-    "cpStatic": "npx cpx ./src/public/**/* dist-server/public",
-    "clean": "npx rimraf dist-server",
+    "transpile": "babel ./src/** --out-dir dist/server",
+    "cpStatic": "npx cpx ./src/public/**/* dist/public",
+    "clean": "npx rimraf dist/server",
     "build": "npx npm-run-all clean transpile",
-    "server": "node ./dist-server/main.js",
-    "dev": "npm-run-all build server -- DEV"
+    "server": "node ./dist/server/main.js",
+    "dev": "npm-run-all build server -- DEV",
+    "watch:dev": "nodemon"
+  },
+  "nodemonConfig": { 
+    "exec": "npm run dev",
+    "watch": ["src/*", "public/*"],
+    "ignore": ["**/__tests__/**", "*.test.js", "*.spec.js"]
   },
   "author": "",
   "license": "ISC",

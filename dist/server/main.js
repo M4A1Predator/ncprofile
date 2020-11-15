@@ -11,18 +11,7 @@ var _init = require("./config/init");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // ENV
-var ENV = process.argv[0]; // Connect DB
-// let dbFile = 'db-dev.json'
-// if (ENV === 'PROD') {
-//   dbFile = 'db-prod.json'
-// }
-// const adapter = new FileSync(dbFile)
-// const db = low(adapter)
-// const appSetting = new AppSetting()
-// db.defaults({
-//     [AppSetting_DB_KEY]: appSetting
-//   })
-//   .write()
+var ENV = process.argv[0]; // init config
 
 (0, _init.initConfig)(); // Set up server Config
 

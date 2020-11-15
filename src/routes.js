@@ -10,8 +10,16 @@ router.get('/', (req, res) => {
 })
 
 router.get('/admin', (req, res) => {
-  // res.send('Welcome Admin')
-  res.sendFile(path.join(__dirname + '/../public/index.html'));
+  res.sendFile(path.join(__dirname + '/../admin/index.html'))
+})
+
+router.get('/admin/*', (req, res) => {
+  let reqPath = req.path
+  reqPath = reqPath.slice("/admin".length)
+  if (reqPath[0] === '/') {
+    reqPath = reqPath.slice(1)
+  }
+  res.sendFile(path.join(__dirname + `/../admin/${reqPath}`))
 })
 
 router.use('/api/admin', adminRoutes)

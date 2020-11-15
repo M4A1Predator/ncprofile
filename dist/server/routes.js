@@ -19,8 +19,17 @@ router.get('/', function (req, res) {
   res.send('Hello World!');
 });
 router.get('/admin', function (req, res) {
-  // res.send('Welcome Admin')
-  res.sendFile(_path["default"].join(__dirname + '/../public/index.html'));
+  res.sendFile(_path["default"].join(__dirname + '/../admin/index.html'));
+});
+router.get('/admin/*', function (req, res) {
+  var reqPath = req.path;
+  reqPath = reqPath.slice("/admin".length);
+
+  if (reqPath[0] === '/') {
+    reqPath = reqPath.slice(1);
+  }
+
+  res.sendFile(_path["default"].join(__dirname + "/../admin/".concat(reqPath)));
 });
 router.use('/api/admin', _routes["default"]);
 var _default = router;

@@ -6,18 +6,7 @@ import { initConfig } from './config/init'
 // ENV
 const ENV = process.argv[0]
 
-// Connect DB
-// let dbFile = 'db-dev.json'
-// if (ENV === 'PROD') {
-//   dbFile = 'db-prod.json'
-// }
-// const adapter = new FileSync(dbFile)
-// const db = low(adapter)
-// const appSetting = new AppSetting()
-// db.defaults({
-//     [AppSetting_DB_KEY]: appSetting
-//   })
-//   .write()
+// init config
 initConfig()
 
 // Set up server Config
