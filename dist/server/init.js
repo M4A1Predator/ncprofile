@@ -3,19 +3,21 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.initConfig = void 0;
+exports.initServices = void 0;
 
-var _container = require("./container");
+var _container = require("../service/container");
 
-var _dbConfig = require("./db-config");
+var _installationService = _interopRequireDefault(require("../service/installation-service"));
 
-var initConfig = function initConfig() {
-  var dbConfig = new _dbConfig.DbConfig();
-  dbConfig.init();
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-  _container.ConfigContainer.init({
-    dbConfig: dbConfig
+var initServices = function initServices() {
+  var installationService = new _installationService["default"]();
+  installationService.init();
+
+  _container.ServiceContainer.init({
+    installationService: installationService
   });
 };
 
-exports.initConfig = initConfig;
+exports.initServices = initServices;

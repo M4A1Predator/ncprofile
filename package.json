@@ -14,10 +14,17 @@
     "dev": "npm-run-all build server -- DEV",
     "watch:dev": "nodemon"
   },
-  "nodemonConfig": { 
+  "nodemonConfig": {
     "exec": "npm run dev",
-    "watch": ["src/*", "public/*"],
-    "ignore": ["**/__tests__/**", "*.test.js", "*.spec.js"]
+    "watch": [
+      "src/*",
+      "public/*"
+    ],
+    "ignore": [
+      "**/__tests__/**",
+      "*.test.js",
+      "*.spec.js"
+    ]
   },
   "author": "",
   "license": "ISC",
@@ -27,7 +34,9 @@
     "@babel/preset-env": "^7.12.1",
     "babel-polyfill": "^6.26.0",
     "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
+    "express-session": "^1.17.1",
     "lowdb": "^1.0.0",
     "nodemon": "^2.0.6",
     "npm-run-all": "^4.1.5",

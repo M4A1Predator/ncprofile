@@ -8,12 +8,15 @@ var _routes = _interopRequireDefault(require("./routes.js"));
 
 var _init = require("./config/init");
 
+var _init2 = require("./service/init");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // ENV
 var ENV = process.argv[0]; // init config
 
-(0, _init.initConfig)(); // Set up server Config
+(0, _init.initConfig)();
+(0, _init2.initServices)(); // Set up server Config
 
 var port = 9300;
 var app = (0, _express["default"])(); // static file

@@ -13,6 +13,8 @@ var _installationService = _interopRequireDefault(require("../../service/install
 
 var _container = require("../../config/container");
 
+var _container2 = require("../../service/container");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -26,8 +28,7 @@ var adminRoutes = _express["default"].Router();
 adminRoutes.get('/', function (req, res) {
   // check installation
   // const service = new InstallationService()
-  res.json(service.isInstalled());
-
+  // res.json(service.isInstalled())
   var _ConfigContainer$getC = _objectSpread({}, _container.ConfigContainer.getConfigs()),
       dbConfig = _ConfigContainer$getC.dbConfig;
 
@@ -35,14 +36,14 @@ adminRoutes.get('/', function (req, res) {
   res.json(db.get('appSetting').value());
 });
 adminRoutes.get('/appConfig', function (req, res) {
-  // check installation
-  // const service = new InstallationService()
-  // res.json(service.isInstalled())
-  var _ConfigContainer$getC2 = _objectSpread({}, _container.ConfigContainer.getConfigs()),
-      dbConfig = _ConfigContainer$getC2.dbConfig;
+  // const { dbConfig } = { ...ConfigContainer.getConfigs() }
+  // const db = dbConfig.db
+  // res.json(db.get('appSetting').value())
+  var _ServiceContainer$get = _objectSpread({}, _container2.ServiceContainer.getServices()),
+      installationService = _ServiceContainer$get.installationService;
 
-  var db = dbConfig.db;
-  res.json(db.get('appSetting').value());
+  console.log(installationService);
+  res.json(installationService.getAppSetting());
 });
 adminRoutes.post('/install', function (req, res) {// register user
 });

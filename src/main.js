@@ -2,12 +2,14 @@ import express from 'express'
 import path from 'path'
 import routes from './routes.js'
 import { initConfig } from './config/init'
+import { initServices } from './service/init'
 
 // ENV
 const ENV = process.argv[0]
 
 // init config
 initConfig()
+initServices()
 
 // Set up server Config
 const port = 9300

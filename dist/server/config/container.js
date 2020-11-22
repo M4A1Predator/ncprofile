@@ -20,7 +20,8 @@ var ConfigContainer = /*#__PURE__*/function () {
     key: "init",
     value: function init(_ref) {
       var dbConfig = _ref.dbConfig;
-      this.config = {};
+      this.config = {}; // initial configs
+
       this.config.dbConfig = dbConfig;
     }
   }, {
