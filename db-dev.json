@@ -1,5 +1,7 @@
 {
   "appSetting": {
-    "isInstalled": false
+    "isInstalled": true,
+    "user": "admin",
+    "password": "$2a$10$w/HuhFVLf.iphGdEnxelj.l7iZn.eiNvEcrfSyAs32Gpa.oCyuukS"
   }
 }

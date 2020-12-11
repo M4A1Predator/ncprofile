@@ -45,7 +45,24 @@ adminRoutes.get('/appConfig', function (req, res) {
   console.log(installationService);
   res.json(installationService.getAppSetting());
 });
-adminRoutes.post('/install', function (req, res) {// register user
+adminRoutes.post('/install', function (req, res) {
+  // register user
+  console.log(req.body);
+
+  var _req$body = _objectSpread({}, req.body),
+      username = _req$body.username,
+      password = _req$body.password;
+
+  var account = {
+    username: username,
+    password: password
+  };
+
+  var _ServiceContainer$get2 = _objectSpread({}, _container2.ServiceContainer.getServices()),
+      installationService = _ServiceContainer$get2.installationService;
+
+  installationService.installFirst(account);
+  res.json({});
 });
 var _default = adminRoutes;
 exports["default"] = _default;

@@ -29,7 +29,13 @@ adminRoutes.get('/appConfig', (req, res) => {
 
 adminRoutes.post('/install', (req, res) => {
   // register user
-  
+  console.log(req.body);
+  const { username, password } = { ...req.body }
+  const account = { username, password }
+
+  const { installationService } = { ...ServiceContainer.getServices() }
+  installationService.installFirst(account)
+  res.json({})
 })
 
 export default adminRoutes

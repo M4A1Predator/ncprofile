@@ -23,7 +23,7 @@ export default class InstallationService {
 
     const { username, password } = { ...data }
     // encrypt password
-    bcrypt.genSalt(10)
+    const salt = bcrypt.genSaltSync(10)
     const hashPassword = bcrypt.hashSync(password, salt);
 
     // save basic setting

@@ -55,7 +55,7 @@ var InstallationService = /*#__PURE__*/function () {
           password = _data.password; // encrypt password
 
 
-      _bcryptjs["default"].genSalt(10);
+      var salt = _bcryptjs["default"].genSaltSync(10);
 
       var hashPassword = _bcryptjs["default"].hashSync(password, salt); // save basic setting
 
