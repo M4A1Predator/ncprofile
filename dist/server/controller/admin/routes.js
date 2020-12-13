@@ -7,13 +7,15 @@ exports["default"] = void 0;
 
 var _express = _interopRequireDefault(require("express"));
 
-var _path = _interopRequireDefault(require("path"));
-
-var _installationService = _interopRequireDefault(require("../../service/installation-service"));
-
 var _container = require("../../config/container");
 
 var _container2 = require("../../service/container");
+
+var _authMiddle = require("../../middleware/auth-middle");
+
+var _cmsSetting = _interopRequireDefault(require("./cms-setting/cms-setting"));
+
+var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -27,8 +29,6 @@ var adminRoutes = _express["default"].Router();
 
 adminRoutes.get('/', function (req, res) {
   // check installation
-  // const service = new InstallationService()
-  // res.json(service.isInstalled())
   var _ConfigContainer$getC = _objectSpread({}, _container.ConfigContainer.getConfigs()),
       dbConfig = _ConfigContainer$getC.dbConfig;
 
@@ -36,19 +36,14 @@ adminRoutes.get('/', function (req, res) {
   res.json(db.get('appSetting').value());
 });
 adminRoutes.get('/appConfig', function (req, res) {
-  // const { dbConfig } = { ...ConfigContainer.getConfigs() }
-  // const db = dbConfig.db
-  // res.json(db.get('appSetting').value())
   var _ServiceContainer$get = _objectSpread({}, _container2.ServiceContainer.getServices()),
       installationService = _ServiceContainer$get.installationService;
 
   console.log(installationService);
   res.json(installationService.getAppSetting());
 });
-adminRoutes.post('/install', function (req, res) {
+adminRoutes.post('/install', _authMiddle.verifyToken, function (req, res) {
   // register user
-  console.log(req.body);
-
   var _req$body = _objectSpread({}, req.body),
       username = _req$body.username,
       password = _req$body.password;
@@ -64,5 +59,28 @@ adminRoutes.post('/install', function (req, res) {
   installationService.installFirst(account);
   res.json({});
 });
+adminRoutes.post('/token', function (req, res) {
+  var _ServiceContainer$get3 = _objectSpread({}, _container2.ServiceContainer.getServices()),
+      adminService = _ServiceContainer$get3.adminService;
+
+  var result = adminService.verifyCredential(req.body);
+
+  if (result.error) {
+    res.sendStatus(401);
+    return;
+  } // issue token
+
+
+  var token = _jsonwebtoken["default"].sign({
+    user: 'admin'
+  }, 'the_secret', {
+    expiresIn: '24H'
+  });
+
+  res.json({
+    accessToken: token
+  });
+});
+adminRoutes.use('/cms-setting', [_cmsSetting["default"]]);
 var _default = adminRoutes;
 exports["default"] = _default;
