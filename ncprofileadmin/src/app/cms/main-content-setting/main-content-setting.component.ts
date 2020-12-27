@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { WebElementTypeEnum } from 'src/app/constants/web-element-type-enum';
+import { WebElement } from 'src/app/models/web-element';
 
 @Component({
   selector: 'app-main-content-setting',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainContentSettingComponent implements OnInit {
 
-  constructor() { }
+  navbar: WebElement;
+
+  constructor() {
+    this.navbar = new WebElement();
+    this.navbar.name = 'Navbar';
+    this.navbar.type = WebElementTypeEnum.JSON;
+  }
 
   ngOnInit(): void {
+    // get data
   }
 
 }
