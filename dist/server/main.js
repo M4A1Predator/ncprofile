@@ -14,6 +14,8 @@ var _cors = _interopRequireDefault(require("cors"));
 
 var _bodyParser = _interopRequireDefault(require("body-parser"));
 
+var _expressFileupload = _interopRequireDefault(require("express-fileupload"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // ENV
@@ -37,7 +39,10 @@ app.use(_bodyParser["default"].urlencoded({
 
 app.use(_bodyParser["default"].json()); // static file
 
-app.use('/static', _express["default"]["static"](_path["default"].join(__dirname, '/../public'))); // set up routes
+app.use('/static', _express["default"]["static"](_path["default"].join(__dirname, '/../public')));
+app.use((0, _expressFileupload["default"])({
+  createParentPath: true
+})); // set up routes
 
 app.use('/', _routes["default"]); // start server
 

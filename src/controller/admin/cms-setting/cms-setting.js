@@ -9,8 +9,26 @@ const routes = express.Router()
 routes.get('/', verifyToken, (req, res) => {
   const { cmsSettingService } = { ...ServiceContainer.getServices() }
   const mainInfo = cmsSettingService.getMainInfo()
-  console.log(mainInfo)
   res.json(mainInfo)
+})
+
+routes.post('/', verifyToken, (req, res) => {
+  const { cmsSettingService } = { ...ServiceContainer.getServices() }
+  const mainInfo = cmsSettingService.setMainInfo(req.body)
+  res.json(mainInfo)
+})
+
+routes.post('/file', verifyToken, (req, res) => {
+  const { cmsSettingService } = { ...ServiceContainer.getServices() }
+  const fileReq = {
+    body: req.body,
+    file: req.files.file
+  }
+  const result = cmsSettingService.uploadFile(fileReq)
+  if (result.error) {
+    res.status(500, result)
+  }
+  res.json(result)
 })
 
 export default routes

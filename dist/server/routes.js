@@ -17,7 +17,8 @@ var router = _express["default"].Router();
 
 router.get('/', function (req, res) {
   res.send('Hello World!');
-});
+}); // serve Admin UI
+
 router.get('/admin', function (req, res) {
   res.sendFile(_path["default"].join(__dirname + '/../admin/index.html'));
 });
@@ -30,7 +31,8 @@ router.get('/admin/*', function (req, res) {
   }
 
   res.sendFile(_path["default"].join(__dirname + "/../admin/".concat(reqPath)));
-});
+}); // Admin API
+
 router.use('/api/admin', _routes["default"]);
 var _default = router;
 exports["default"] = _default;

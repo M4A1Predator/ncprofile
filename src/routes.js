@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+// serve Admin UI
 router.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname + '/../admin/index.html'))
 })
@@ -22,6 +23,7 @@ router.get('/admin/*', (req, res) => {
   res.sendFile(path.join(__dirname + `/../admin/${reqPath}`))
 })
 
+// Admin API
 router.use('/api/admin', adminRoutes)
 
 export default router;

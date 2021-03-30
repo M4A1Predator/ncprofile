@@ -5,6 +5,7 @@ import { initConfig } from './config/init'
 import { initServices } from './service/init'
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import fileUpload from 'express-fileupload'
 
 // ENV
 const ENV = process.argv[0]
@@ -32,6 +33,10 @@ app.use(bodyParser.json())
 
 // static file
 app.use('/static', express.static(path.join(__dirname, '/../public')))
+
+app.use(fileUpload({
+  createParentPath: true
+}));
 
 // set up routes
 app.use('/', routes)

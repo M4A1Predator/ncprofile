@@ -6,6 +6,6 @@ export const URLs = {
   getAppSetting: `${PREFIX}appConfig`,
   install: `${PREFIX}install`,
 
-  getMainContentInfo: `${PREFIX}main-content-info`,
+  getMainContentInfo: `${PREFIX}cms-setting`,
   updateMainContentInfo: `${PREFIX}main-content-info`
 };

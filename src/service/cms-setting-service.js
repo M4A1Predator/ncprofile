@@ -14,7 +14,7 @@ export default class CmsSettingService extends ServiceAbstract {
   }
 
   getMainInfo() {
-    const mainInfo = this.db.get('mainInfo').value()
+    const mainInfo = this.db.get(MainInfo_DB_KEY).value()
     if (!mainInfo) {
       // init main info
       const newMainInfo = new MainInfo()
@@ -23,5 +23,27 @@ export default class CmsSettingService extends ServiceAbstract {
     }
 
     return mainInfo
+  }
+
+  setMainInfo(mainInfoReq) {
+    this.db.set(MainInfo_DB_KEY, mainInfoReq).write()
+    const mainInfo = this.db.get(MainInfo_DB_KEY).value()
+    return mainInfo
+  }
+
+  uploadFile(fileReq) {
+    
+    const assetPath = "asset/"
+    try {
+      fileReq.file.mv(assetPath + fileReq.body.name)
+      return {
+        status: 'success'
+      }
+    } catch(ex) {
+      console.error(ex)
+      return {
+        error: 'upload failed'
+      }
+    }
   }
 }

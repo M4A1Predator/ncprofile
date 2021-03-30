@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginCred } from 'src/app/models/login-cred';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit(): void {
 
@@ -39,7 +41,8 @@ export class LoginComponent implements OnInit {
     const loginCred = new LoginCred(this.username, this.password);
 
     this.authService.requestToken(loginCred).subscribe(res => {
-      console.log(res)
+      localStorage.setItem('auth', JSON.stringify(res));
+      this.router.navigate(['/']);
     });
   }
 

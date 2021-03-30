@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { URLs } from '../constants/url';
 import { LoginCred } from '../models/login-cred';
 import { ApiService } from './api.service';
+import { AuthStoreValue } from '../models/auth-store-value';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,26 @@ export class AuthService {
 
   requestToken(cred: LoginCred): Observable<any> {
     return this.http.post(`${this.apiService.getServerUrl()}${URLs.requestToken}`, cred);
+  }
+
+  logout(): void {
+    localStorage.setItem('auth', '');
+  }
+
+  getAuthHeaderValue(httpOptions: any = null): any {
+    const authValue = localStorage.getItem('auth');
+    if (!authValue) {
+      return;
+    }
+    const authSerialized: AuthStoreValue = JSON.parse(authValue);
+    if (httpOptions) {
+      httpOptions.headers['x-authorization'] = authSerialized.accessToken;
+      return httpOptions;
+    }
+    return {
+      headers: {
+        'x-authorization': authSerialized.accessToken
+      }
+    };
   }
 }
