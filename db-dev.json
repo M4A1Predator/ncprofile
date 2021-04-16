@@ -5,8 +5,21 @@
     "password": "$2a$10$w/HuhFVLf.iphGdEnxelj.l7iZn.eiNvEcrfSyAs32Gpa.oCyuukS"
   },
   "mainInfo": {
-    "websiteName": "Hellox",
-    "title": "Welcome",
-    "tabTitle": null
+    "websiteName": "NCProfileWeb",
+    "title": "NCProfileWeb",
+    "tabTitle": "NCProfileWeb",
+    "navbar": {
+      "meta": {},
+      "data": [
+        {
+          "name": "Home",
+          "link": "/"
+        },
+        {
+          "name": "About",
+          "link": "/about"
+        }
+      ]
+    }
   }
 }

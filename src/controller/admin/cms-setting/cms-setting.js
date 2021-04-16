@@ -3,6 +3,7 @@ import express from 'express'
 import { ConfigContainer } from '../../../config/container'
 import { ServiceContainer } from '../../../service/container'
 import { verifyToken } from '../../../middleware/auth-middle'
+import jsonschema from 'jsonschema'
 
 const routes = express.Router()
 
@@ -29,6 +30,14 @@ routes.post('/file', verifyToken, (req, res) => {
     res.status(500, result)
   }
   res.json(result)
+})
+
+routes.get('/files', verifyToken, (req, res) => {
+  const { cmsSettingService } = { ...ServiceContainer.getServices() }
+  cmsSettingService.getAssetList().then(data => {
+    res.json(data)
+  })
+
 })
 
 export default routes

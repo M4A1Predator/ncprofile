@@ -13,6 +13,8 @@ export class ElementTextboxComponent implements OnInit {
   webElement: WebElement;
   elementId: string;
 
+  editor: any;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -20,9 +22,13 @@ export class ElementTextboxComponent implements OnInit {
     setTimeout(() => {
       const container = document.getElementById(this.elementId);
       const options = {
-          mode: 'code'
+          mode: 'code',
+          onChange: () => {
+            this.webElement.content = this.editor.get();
+          }
       };
-      const editor = new JSONEditor(container, options);
+      this.editor = new JSONEditor(container, options);
+      this.editor.set(this.webElement.content);
     }, 1000);
   }
 
