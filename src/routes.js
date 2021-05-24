@@ -41,6 +41,9 @@ router.get('/admin*', (req, res) => {
 // Admin API
 router.use('/api/admin', adminRoutes)
 
+// Serve public UI
+router.get('/*.*', express.static(__dirname + '/../../asset'))
+
 // Public API
 router.use('/api', cmsInfoRoutes)
 

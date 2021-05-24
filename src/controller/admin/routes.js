@@ -21,7 +21,7 @@ adminRoutes.get('/appConfig', (req, res) => {
   res.json(installationService.getAppSetting())
 })
 
-adminRoutes.post('/install', verifyToken, (req, res) => {
+adminRoutes.post('/install', (req, res) => {
   // register user
   const { username, password } = { ...req.body }
   const account = { username, password }

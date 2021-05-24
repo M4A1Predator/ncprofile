@@ -2,9 +2,11 @@ import ServiceAbstract from './service-abstract'
 import { ConfigContainer } from '../config/container'
 import { MainInfo, MainInfo_DB_KEY, mainInfoSchema } from '../model/main-info'
 import { NavbarInfo, navbarReqSchema } from '../model/navbar-info'
+import { WebElm } from '../model/web-elm'
+import { DB_WEB_ELMS } from '../constants/db-keys'
+import { WEB_ELM_TYPES, MAIN_BANNER, FOOTER } from '../constants/default-web-elm'
 import fs from 'fs'
 import jsonschema from 'jsonschema'
-import { exception } from 'console'
 
 const assetPath = "asset/"
 
@@ -64,6 +66,51 @@ export default class CmsSettingService extends ServiceAbstract {
     return mainInfo
   }
 
+  updateWebEml(webElmReq) {
+    // validation
+    if ((webElmReq.name == MAIN_BANNER || webElmReq.name == FOOTER) && 
+          webElmReq.type !== WEB_ELM_TYPES.JSON) {
+        return {
+          err: "Invalid web element type"
+        }
+    }
+  
+    // prepare to save web elm
+    const webElm = new WebElm()
+    webElm.name = webElmReq.name
+    webElm.data = webElmReq.data
+    webElm.type = webElmReq.type
+    webElm.meta = webElmReq.meta
+
+    // validate data
+    // -------------
+
+    // prepare db
+    const webElmsDbSize = this.db.get(DB_WEB_ELMS).size().value()
+    if (!webElmsDbSize) {
+      this.db.set(DB_WEB_ELMS, []).write()
+    }
+
+    // upsert web elm
+    const webElmDb = this.db.get(DB_WEB_ELMS).find({
+      name: webElm.name
+    })
+
+    if (webElmDb.value()) {
+      webElmDb.assign(webElm).write()
+    } else {
+      this.db.get(DB_WEB_ELMS).push(webElm).write()
+    }
+  }
+
+  getWebElm() {
+    return this.db.get(DB_WEB_ELMS).value()
+  }
+
+  updateWebPage() {
+    
+  }
+
   uploadFile(fileReq) {
     
     try {
@@ -83,7 +130,6 @@ export default class CmsSettingService extends ServiceAbstract {
 
     return new Promise((resolve, reject) => {
       fs.readdir(assetPath, (err, files) => {
-        console.log(files)
         const assetList = []
         files.forEach((f) => {
           assetList.push({
@@ -97,11 +143,16 @@ export default class CmsSettingService extends ServiceAbstract {
 
   }
 
+  getFile() {
+    
+  }
+
   _setNavBar(navbarReq) {
     // verify data
     const v = new jsonschema.Validator()
     const validateResult = v.validate(navbarReq, navbarReqSchema)
     if (validateResult.errors.length) {
+      console.error(validateResult.errors)
       return validateResult.errors
     }
 

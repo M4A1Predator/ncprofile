@@ -12,6 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MainContentSettingComponent } from './cms/main-content-setting/main-content-setting.component';
 import { ElementTextboxComponent } from './cms/components/element-textbox/element-textbox.component';
 import { LoginComponent } from './auth/login/login.component';
+import { AssetsPageComponent } from './cms/assets-page/assets-page.component';
+import { SelectAssetModalComponent } from './cms/components/select-asset-modal/select-asset-modal.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { LoginComponent } from './auth/login/login.component';
     HomeComponent,
     MainContentSettingComponent,
     ElementTextboxComponent,
-    LoginComponent
+    LoginComponent,
+    AssetsPageComponent,
+    SelectAssetModalComponent
   ],
   imports: [
     BrowserModule,

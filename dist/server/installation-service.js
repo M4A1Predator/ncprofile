@@ -9,6 +9,12 @@ var _appSetting = require("../model/app-setting");
 
 var _container = require("../config/container");
 
+var _webElm = require("../model/web-elm");
+
+var _dbKeys = require("../constants/db-keys");
+
+var _defaultWebElm = require("../constants/default-web-elm");
+
 var _bcryptjs = _interopRequireDefault(require("bcryptjs"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -64,7 +70,15 @@ var InstallationService = /*#__PURE__*/function () {
       appSetting.isInstalled = true;
       appSetting.user = username;
       appSetting.password = hashPassword;
-      db.set(_appSetting.AppSetting_DB_KEY, appSetting).write();
+      db.set(_appSetting.AppSetting_DB_KEY, appSetting).write(); // save basic data
+
+      var mainBanner = new _webElm.WebElm();
+      mainBanner.data = {
+        "text": "Power of Lightweight"
+      };
+      mainBanner.name = _defaultWebElm.MAIN_BANNER;
+      mainBanner.type = _defaultWebElm.WEB_ELM_TYPES.JSON;
+      db.set(_dbKeys.DB_WEB_ELMS, [mainBanner]).write();
     }
   }]);
 

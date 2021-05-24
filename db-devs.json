@@ -1,0 +1,34 @@
+{
+  "appSetting": {
+    "isInstalled": true,
+    "user": "admin",
+    "password": "$2a$10$w/HuhFVLf.iphGdEnxelj.l7iZn.eiNvEcrfSyAs32Gpa.oCyuukS"
+  },
+  "mainInfo": {
+    "websiteName": "NCProfileWeb",
+    "title": "NCProfileWeb",
+    "tabTitle": "NCProfileWeb",
+    "navbar": {
+      "meta": {},
+      "data": [
+        {
+          "name": "Home",
+          "link": "/"
+        },
+        {
+          "name": "About",
+          "link": "/about"
+        }
+      ]
+    }
+  },
+  "web_elms": [
+    {
+      "name": "MAIN_BANNER",
+      "data": {
+        "text": "Power of Lightweight"
+      },
+      "type": "JSON"
+    }
+  ]
+}

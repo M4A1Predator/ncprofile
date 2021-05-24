@@ -4,6 +4,8 @@ export class MainInfo {
     this.title = 'Welcome'
     this.tabTitle = null
     this.navbar = null
+    this.logo = null
+    this.favicon = null
   }
 }
 
@@ -15,7 +17,9 @@ export const mainInfoSchema = {
   properties: {
     websiteName: {type: "string"},
     title: {type: "string"},
-    tabTitle: {type: "string"}
+    tabTitle: {type: "string"},
+    logo: {type: "string"},
+    favicon: {type: "string"}
   },
   required: ["websiteName", "title"]
 }

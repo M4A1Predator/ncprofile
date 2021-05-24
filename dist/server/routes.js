@@ -44,7 +44,9 @@ router.get('/admin*', function (req, res) {
 //==========================================================
 // Admin API
 
-router.use('/api/admin', _routes["default"]); // Public API
+router.use('/api/admin', _routes["default"]); // Serve public UI
+
+router.get('/*.*', _express["default"]["static"](__dirname + '/../../asset')); // Public API
 
 router.use('/api', _routes2["default"]);
 var _default = router;

@@ -1,0 +1,20 @@
+<app-layout>
+  <app-navbar></app-navbar>
+  <div class="container">
+    <div class="upload-new-asset">
+      <h2>Add File</h2>
+      <div class="form-group row">
+        <label for="" class="col-sm-2 col-form-label">File</label>
+        <div class="col-sm-10">
+          <input type="file" (change)="uploadFile($event.target.files)" />
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="asset-list">
+      <h2>List</h2>
+      <div *ngFor="let f of files; index i">{{f.path}}</div>
+    </div>
+  </div>
+  
+</app-layout>

@@ -42,7 +42,7 @@ adminRoutes.get('/appConfig', function (req, res) {
   console.log(installationService);
   res.json(installationService.getAppSetting());
 });
-adminRoutes.post('/install', _authMiddle.verifyToken, function (req, res) {
+adminRoutes.post('/install', function (req, res) {
   // register user
   var _req$body = _objectSpread({}, req.body),
       username = _req$body.username,

@@ -7,5 +7,8 @@ export const URLs = {
   install: `${PREFIX}install`,
 
   getMainContentInfo: `${PREFIX}cms-setting`,
-  updateMainContentInfo: `${PREFIX}main-content-info`
+  updateMainContentInfo: `${PREFIX}main-content-info`,
+  
+  mainPics: `${PREFIX}main-content-pics`,
+  assets: `${PREFIX}cms-setting/files`
 };

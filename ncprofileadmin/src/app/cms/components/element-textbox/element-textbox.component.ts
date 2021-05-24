@@ -18,6 +18,10 @@ export class ElementTextboxComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    if (!this.webElement) {
+      return;
+    }
+
     this.elementId = this.webElement.name;
     setTimeout(() => {
       const container = document.getElementById(this.elementId);
@@ -28,7 +32,7 @@ export class ElementTextboxComponent implements OnInit {
           }
       };
       this.editor = new JSONEditor(container, options);
-      this.editor.set(this.webElement.content);
+      this.editor.set(!!this.webElement.content ? this.webElement.content : {});
     }, 1000);
   }
 
