@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainContentComponent } from './content/main-content/main-content.component';
+import { CoreWebComponent } from './core/core-web/core-web.component';
 
 
 const routes: Routes = [
-  { path: '**', component: MainContentComponent, pathMatch: 'full' },
+  { path: '**', component: CoreWebComponent, pathMatch: 'full' },
 ];
 
 @NgModule({

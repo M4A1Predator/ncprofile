@@ -8,7 +8,7 @@ export const URLs = {
 
   getMainContentInfo: `${PREFIX}cms-setting`,
   updateMainContentInfo: `${PREFIX}main-content-info`,
-  
-  mainPics: `${PREFIX}main-content-pics`,
+
+  mainPics: `${PREFIX}cms-setting/main-content-pics`,
   assets: `${PREFIX}cms-setting/files`
 };

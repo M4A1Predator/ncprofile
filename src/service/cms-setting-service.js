@@ -7,6 +7,8 @@ import { DB_WEB_ELMS } from '../constants/db-keys'
 import { WEB_ELM_TYPES, MAIN_BANNER, FOOTER } from '../constants/default-web-elm'
 import fs from 'fs'
 import jsonschema from 'jsonschema'
+import { ReqModel } from '../model/req-model'
+import { ResModel } from '../model/res-model'
 
 const assetPath = "asset/"
 
@@ -33,37 +35,46 @@ export default class CmsSettingService extends ServiceAbstract {
     return mainInfo
   }
 
-  setMainInfo(mainInfoReq) {
+  setMainInfo(req, res) {
+    const mainInfoReq = Object.assign(new ReqModel(), req)
+    const mainInfoRes = Object.assign(new ResModel(), res)
+
     // validate req
     const v = new jsonschema.Validator()
     // v.addSchema(mainInfoSchema)
-    const validateResult = v.validate(mainInfoReq, mainInfoSchema)
+    const validateResult = v.validate(mainInfoReq.body, mainInfoSchema)
     if (validateResult.errors.length) {
       console.error(validateResult.errors)
-      return {
-        err: validateResult.errors
-      }
+      mainInfoRes.errors = validateResult.errors
+      return mainInfoRes
     }
 
     // extract main info and others
-    const navbarReq = mainInfoReq.navbar
-    delete mainInfoReq['navbar']
+    const navbarReq = mainInfoReq.body.navbar
+
+    // get current main info
+    let mainInfo = Object.assign(new MainInfo(), this.db.get(MainInfo_DB_KEY).value())
 
     // save main info
-    this.db.set(MainInfo_DB_KEY, mainInfoReq).write()
+    mainInfo.websiteName = mainInfoReq.body.websiteName
+    mainInfo.title = mainInfoReq.body.title
+    mainInfo.tabTitle = mainInfoReq.body.tabTitle
+    mainInfo.navbar = mainInfoReq.body.navbar
+    this.db.set(MainInfo_DB_KEY, mainInfo).write()
 
     // save navbar
     const setNavErr = this._setNavBar(navbarReq)
     if (setNavErr) {
       console.error("Save navbar failed")
-      return {
-        err: validateResult.errors
-      }
+      mainInfoRes.errors = validateResult.errors
+      return mainInfoRes
     }
 
     // return new data
-    const mainInfo = this.db.get(MainInfo_DB_KEY).value()
-    return mainInfo
+    mainInfo = this.db.get(MainInfo_DB_KEY).value()
+    mainInfoRes.data = mainInfo
+
+    return { mainInfoReq, mainInfoRes }
   }
 
   updateWebEml(webElmReq) {
@@ -112,9 +123,8 @@ export default class CmsSettingService extends ServiceAbstract {
   }
 
   uploadFile(fileReq) {
-    
     try {
-      fileReq.file.mv(assetPath + fileReq.body.name)
+      fileReq.file.mv(assetPath + fileReq.file.name)
       return {
         status: 'success'
       }
@@ -145,6 +155,13 @@ export default class CmsSettingService extends ServiceAbstract {
 
   getFile() {
     
+  }
+
+  updateMainPics(mainPicsReq) {
+    const mainInfo = this.db.get(MainInfo_DB_KEY).value()
+    mainInfo.logo = mainPicsReq.logoPath
+    mainInfo.favicon = mainPicsReq.faviconPath
+    this.db.set(MainInfo_DB_KEY, mainInfo).write()
   }
 
   _setNavBar(navbarReq) {

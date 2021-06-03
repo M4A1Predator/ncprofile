@@ -7,13 +7,15 @@ import { MainContentComponent } from './content/main-content/main-content.compon
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './content/layout/navbar/navbar.component';
 import { PageContentComponent } from './content/page-content/page-content.component';
+import { CoreWebComponent } from './core/core-web/core-web.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainContentComponent,
     NavbarComponent,
-    PageContentComponent
+    PageContentComponent,
+    CoreWebComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

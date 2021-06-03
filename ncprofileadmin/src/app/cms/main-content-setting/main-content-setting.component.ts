@@ -4,6 +4,7 @@ import { $ } from 'protractor';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { WebElementTypeEnum } from 'src/app/constants/web-element-type-enum';
+import { AssetFile } from 'src/app/models/asset-file';
 import { MainPicsReq } from 'src/app/models/main-pics';
 import { MainWebInfo, MainWebInfoReq } from 'src/app/models/main-web-info';
 import { WebElement } from 'src/app/models/web-element';
@@ -26,6 +27,9 @@ export class MainContentSettingComponent implements OnInit, OnDestroy {
   navbar: WebElement;
   mainPicsReq: MainPicsReq = new MainPicsReq();
 
+  currentLogoPath: string;
+  currentFaviconPath: string;
+
   selectAssetModalName: string;
 
   constructor(private cmsService: CmsService) {
@@ -47,6 +51,8 @@ export class MainContentSettingComponent implements OnInit, OnDestroy {
     this.subs.add(this.cmsService.getMainContentData().subscribe((data: MainWebInfo) => {
       this.mainInfoForm.get('websiteName').setValue(data.websiteName);
       this.mainInfoForm.get('tabTitle').setValue(data.title);
+      this.currentLogoPath = data.logo
+      this.currentFaviconPath = data.favicon
       if (data.navbar && data.navbar.data) {
         this.navbar.content = data.navbar.data;
       }
@@ -67,16 +73,13 @@ export class MainContentSettingComponent implements OnInit, OnDestroy {
   }
 
   uploadMainPics() {
-    if (!this.mainPicsReq.logo && !this.mainPicsReq.favicon) {
-      return;
-    }
-
     // upload pics
     this.subs.add(
-      this.cmsService.uploadMainPics(this.mainPicsReq).pipe(take(1)).subscribe(res => {
-        this.saveLogoMsg = "Success";
+      // this.cmsService.uploadMainPics(this.mainPicsReq).pipe(take(1)).subscribe(res => {
+      this.cmsService.saveMainPics(this.mainPicsReq).pipe(take(1)).subscribe(res => {
+        this.saveLogoMsg = 'Success';
       }, err => {
-        this.saveLogoMsg = "Save failed";
+        this.saveLogoMsg = 'Save failed';
       })
     );
   }
@@ -106,6 +109,21 @@ export class MainContentSettingComponent implements OnInit, OnDestroy {
   }
 
   onCloseModal(val: any) {
+    this.selectAssetModalName = undefined;
+  }
+
+  onSelectAsset(asset: AssetFile) {
+    if (asset.isDir) {
+      return;
+    }
+
+    if (this.selectAssetModalName === 'logo') {
+      this.mainPicsReq.logoPath = asset.path;
+    } else {
+      this.mainPicsReq.faviconPath = asset.path;
+    }
+
+    // close modal
     this.selectAssetModalName = undefined;
   }
 

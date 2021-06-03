@@ -1,6 +1,7 @@
 import { HttpEvent } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { AssetFile } from 'src/app/models/asset-file';
 import { CmsService } from 'src/app/services/cms.service';
 
@@ -13,21 +14,36 @@ export class AssetsPageComponent implements OnInit, OnDestroy {
 
   private sub: Subscription = new Subscription();
   files: AssetFile[];
+  newFiles: FileList;
+  uploadMsg: string;
 
   constructor(private cmsService: CmsService) { }
 
   ngOnInit(): void {
-    this.sub.add(this.cmsService.getAssets().subscribe((data: AssetFile[]) => {
-      this.files = data;
-    }))
+    this.loadAssets()
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
-  uploadFile(files: FileList) {
-    console.log(files)
+  loadAssets() {
+    this.sub.add(this.cmsService.getAssets().pipe(take(1)).subscribe((data: AssetFile[]) => {
+      this.files = data;
+    }))
+  }
+
+  uploadFile() {
+    if (!this.newFiles) {
+      return;
+    }
+    this.cmsService.uploadAssets(this.newFiles[0]).subscribe(res => {
+      this.newFiles = undefined;
+      this.uploadMsg = "Uploaded"
+      this.loadAssets();
+    }, err => {
+      this.uploadMsg = "Upload failed"
+    });
   }
 
 }

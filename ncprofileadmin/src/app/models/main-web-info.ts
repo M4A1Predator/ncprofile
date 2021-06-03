@@ -8,6 +8,8 @@ export class MainWebInfo {
   title: string;
   tabTitle: string;
   navbar: Navbar;
+  logo: string;
+  favicon: string;
 }
 
 export class MainWebInfoReq {

@@ -1,6 +1,5 @@
 import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { URLs } from '../constants/url';
@@ -33,21 +32,42 @@ export class CmsService {
     if (!data.logo && !data.favicon) {
       return;
     }
-    
+
     const formData = new FormData();
     if (data.logo) {
       formData.append('logo', data.logo);
-    } 
-    
+    }
+
     if (data.favicon) {
-      formData.append('favicon', data.favicon); 
+      formData.append('favicon', data.favicon);
     }
     const options = this.authService.getAuthHeaderValue();
-    return this.http.post(`${this.apiService.getServerUrl()}${URLs.mainPics}`, formData, options)
+    return this.http.post(`${this.apiService.getServerUrl()}${URLs.mainPics}`, formData, options);
+  }
+
+  saveMainPics(data: MainPicsReq): Observable<any> {
+    if (!data.faviconPath && !data.logoPath) {
+      return;
+    }
+
+    const options = this.authService.getAuthHeaderValue();
+    const body = {
+      faviconPath: data.faviconPath,
+      logoPath: data.logoPath
+    };
+
+    return this.http.post(`${this.apiService.getServerUrl()}${URLs.mainPics}`, body, options);
   }
 
   getAssets(): Observable<any> {
     const options = this.authService.getAuthHeaderValue();
     return this.http.get<AssetFile[]>(`${this.apiService.getServerUrl()}${URLs.assets}`, options);
+  }
+
+  uploadAssets(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    const options = this.authService.getAuthHeaderValue();
+    return this.http.post(`${this.apiService.getServerUrl()}${URLs.assets}`, formData, options);
   }
 }

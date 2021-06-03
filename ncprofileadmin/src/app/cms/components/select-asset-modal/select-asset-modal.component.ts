@@ -1,4 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { AssetFile } from 'src/app/models/asset-file';
+import { CmsService } from 'src/app/services/cms.service';
 
 declare const $: any;
 
@@ -7,19 +11,31 @@ declare const $: any;
   templateUrl: './select-asset-modal.component.html',
   styleUrls: ['./select-asset-modal.component.styl']
 })
-export class SelectAssetModalComponent implements OnInit {
+export class SelectAssetModalComponent implements OnInit, OnDestroy {
 
+  subs: Subscription = new Subscription();
   _modalName: string;
-  
+
   @Output()
   onCloseModal: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() { }
+  @Output()
+  selectAssetEmit: EventEmitter<AssetFile> = new EventEmitter<AssetFile>();
+
+  assets: AssetFile[];
+
+  constructor(private cmsService: CmsService) { }
 
   ngOnInit(): void {
+    // set onclose event
     $('#selectAssetModal').on('hidden.bs.modal', () => {
-      this.onCloseModal.emit("close")
+      this.onCloseModal.emit('close');
     });
+
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 
   @Input()
@@ -28,17 +44,28 @@ export class SelectAssetModalComponent implements OnInit {
   }
 
   set modalName(v: string) {
-    console.log(v)
     this._modalName = v;
-    this.onModalNameChange()
+    this.onModalNameChange();
   }
 
   onModalNameChange() {
-    if(!!this._modalName) { 
-      $('#selectAssetModal').modal({show: true})
+    if (!!this._modalName) {
+      $('#selectAssetModal').modal({show: true});
+      // load assets data
+      this.subs.add(
+        this.cmsService.getAssets().pipe(take(1)).subscribe(data => {
+          this.assets = data;
+        }, err => {
+        })
+      );
+
     } else {
-      $('#selectAssetModal').modal({show: false})
+      $('#selectAssetModal').modal('hide');
     }
+  }
+
+  onSelectAsset(e: any, asset: AssetFile) {
+    this.selectAssetEmit.emit(asset);
   }
 
 }
