@@ -33,6 +33,7 @@ router.get('/admin/*.*', (req, res) => {
   res.sendFile(path.join(__dirname + `/../admin/${reqPath}`), (err) => {
     // get to admin uri
     // res.sendFile(path.join(__dirname + '/../admin/index.html'))
+    console.error(err)
   })
   
 })

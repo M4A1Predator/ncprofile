@@ -9,7 +9,7 @@ import fileUpload from 'express-fileupload'
 import helmet from 'helmet'
 
 // ENV
-const ENV = process.argv[0]
+// const ENV = process.argv[0]
 
 // init config
 initConfig()

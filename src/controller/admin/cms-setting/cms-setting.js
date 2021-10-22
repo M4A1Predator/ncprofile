@@ -1,6 +1,6 @@
 
 import express from 'express'
-import { ConfigContainer } from '../../../config/container'
+// import { ConfigContainer } from '../../../config/container'
 import { ServiceContainer } from '../../../service/container'
 import { verifyToken } from '../../../middleware/auth-middle'
 import { webEmlReqSchema, webEmlSchema } from '../../../model/web-elm'
@@ -16,6 +16,9 @@ routes.get('/', verifyToken, (req, res) => {
   res.json(mainInfo)
 })
 
+/**
+ * Update maininfo
+ */
 routes.post('/', verifyToken, (req, res) => {
   const { cmsSettingService } = { ...ServiceContainer.getServices() }
 
@@ -32,6 +35,9 @@ routes.post('/', verifyToken, (req, res) => {
   res.json(setMainInfoRes.data)
 })
 
+/*
+ * Upload file
+ */
 routes.post('/files', verifyToken, (req, res) => {
   const { cmsSettingService } = { ...ServiceContainer.getServices() }
   const fileReq = {
@@ -45,6 +51,9 @@ routes.post('/files', verifyToken, (req, res) => {
   res.json(result)
 })
 
+/*
+ * Get files list
+ */
 routes.get('/files', verifyToken, (req, res) => {
   const { cmsSettingService } = { ...ServiceContainer.getServices() }
   cmsSettingService.getAssetList().then(data => {
@@ -52,15 +61,19 @@ routes.get('/files', verifyToken, (req, res) => {
   })
 })
 
+/*
+ * Add element
+ */
 routes.post('/elm', verifyToken, (req, res) => {
   const { cmsSettingService } = { ...ServiceContainer.getServices() }
 
-  // validation
+  // validation req
   if (!req.body || !req.body.length) {
     res.json({"err": "Body is required"})
     return;
   }
 
+  // validate schema
   const v = new jsonschema.Validator();
   v.addSchema(webEmlSchema)
   const validateResult = v.validate(req.body, webEmlReqSchema)
@@ -70,6 +83,8 @@ routes.post('/elm', verifyToken, (req, res) => {
     })
     return;
   }
+
+  // update web elements
   const errs = []
   req.body.forEach(body => {
     const err = cmsSettingService.updateWebEml(body);
@@ -82,7 +97,7 @@ routes.post('/elm', verifyToken, (req, res) => {
 })
 
 routes.post('/elm-meta', verifyToken, (req, res) => {
-  const { cmsSettingService } = { ...ServiceContainer.getServices() }
+  // const { cmsSettingService } = { ...ServiceContainer.getServices() }
   const reqModel = new ReqModel()
   reqModel.body = req.body
   res.json({})
@@ -100,6 +115,19 @@ routes.post('/main-content-pics', verifyToken, (req, res) => {
     res.status(400, err)
   } else {
     res.json({})
+  }
+})
+
+/*
+ * Create new webpage
+ */
+routes.post('/pages', verifyToken, (req, res) => {
+  const { cmsSettingService } = { ...ServiceContainer.getServices() }
+  const err = cmsSettingService.createWebPage(req.body)
+  if (err) {
+    res.status(400).json(err)
+  } else {
+    res.status(201).json({})
   }
 })
 

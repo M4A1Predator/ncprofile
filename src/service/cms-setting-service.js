@@ -3,12 +3,13 @@ import { ConfigContainer } from '../config/container'
 import { MainInfo, MainInfo_DB_KEY, mainInfoSchema } from '../model/main-info'
 import { NavbarInfo, navbarReqSchema } from '../model/navbar-info'
 import { WebElm } from '../model/web-elm'
-import { DB_WEB_ELMS } from '../constants/db-keys'
+import { DB_WEB_ELMS, DB_WEB_PAGES } from '../constants/db-keys'
 import { WEB_ELM_TYPES, MAIN_BANNER, FOOTER } from '../constants/default-web-elm'
 import fs from 'fs'
 import jsonschema from 'jsonschema'
 import { ReqModel } from '../model/req-model'
 import { ResModel } from '../model/res-model'
+import { WebPage, WebPageReq, webPageReqSchema } from '../model/web-page'
 
 const assetPath = "asset/"
 
@@ -94,6 +95,11 @@ export default class CmsSettingService extends ServiceAbstract {
     webElm.meta = webElmReq.meta
 
     // validate data
+    if (webElm.type !== WEB_ELM_TYPES.JSON && webElm.type !== WEB_ELM_TYPES.TEXT) {
+      return {
+        err: "Invalid web element type"
+      }
+    }
     // -------------
 
     // prepare db
@@ -116,10 +122,6 @@ export default class CmsSettingService extends ServiceAbstract {
 
   getWebElm() {
     return this.db.get(DB_WEB_ELMS).value()
-  }
-
-  updateWebPage() {
-    
   }
 
   uploadFile(fileReq) {
@@ -177,5 +179,40 @@ export default class CmsSettingService extends ServiceAbstract {
     const navbarData = new NavbarInfo()
     navbarData.data = navbarReq
     this.db.set(`${MainInfo_DB_KEY}.navbar`, navbarData).write()
+  }
+
+  /*
+   * Add webpage
+   */
+  createWebPage(webPageReq) {
+    // validate schema
+    const v = new jsonschema.Validator()
+    const validateResult = v.validate(webPageReq, webPageReqSchema)
+    if (validateResult.errors.length) {
+      console.error(validateResult.errors)
+      return validateResult.errors
+    }
+
+    // prepare db
+    const webEPagesDbSize = this.db.get(DB_WEB_PAGES).size().value()
+    if (!webEPagesDbSize) {
+      this.db.set(DB_WEB_PAGES, []).write()
+    }
+
+    const webPage = new WebPage()
+    webPage.name = webPageReq.name
+    webPage.route = webPageReq.route
+    webPage.elms = webPageReq.elms
+
+    // insert webpage
+    this.db.get(DB_WEB_PAGES).push(webPage).write()
+
+  }
+
+  /*
+   * Update webpage
+   */
+  updateWebPage() {
+    
   }
 }

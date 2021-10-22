@@ -2,7 +2,6 @@
 import express from 'express'
 import { ConfigContainer } from '../../config/container'
 import { ServiceContainer } from '../../service/container'
-import { verifyToken } from '../../middleware/auth-middle'
 import cmsRoutes from './cms-setting/cms-setting'
 import jwt from 'jsonwebtoken'
 

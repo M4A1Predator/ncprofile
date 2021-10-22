@@ -31,5 +31,15 @@
       ]
     },
     "logo": "hello.png"
-  }
+  },
+  "web_pages": [
+    {
+      "name": "Korean Goods",
+      "route": "/kor"
+    },
+    {
+      "name": "GER Goods",
+      "route": "/ger"
+    }
+  ]
 }
