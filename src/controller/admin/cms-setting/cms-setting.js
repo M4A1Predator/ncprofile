@@ -1,6 +1,5 @@
 
 import express from 'express'
-// import { ConfigContainer } from '../../../config/container'
 import { ServiceContainer } from '../../../service/container'
 import { verifyToken } from '../../../middleware/auth-middle'
 import { webEmlReqSchema, webEmlSchema } from '../../../model/web-elm'
@@ -44,6 +43,14 @@ routes.post('/files', verifyToken, (req, res) => {
     body: req.body,
     file: req.files.file
   }
+
+  // validate file name
+  let re = new RegExp(/^(.*\s+.*)+$/);
+  if (re.test(fileReq.file.name)) {
+    res.status(400).json({ 'error': 'File name must not contains whitespace' })
+    return
+  }
+
   const result = cmsSettingService.uploadFile(fileReq)
   if (result.error) {
     res.status(500, result)
@@ -54,8 +61,21 @@ routes.post('/files', verifyToken, (req, res) => {
 /*
  * Get files list
  */
-routes.get('/files', verifyToken, (req, res) => {
+routes.get('/files', verifyToken, async (req, res) => {
   const { cmsSettingService } = { ...ServiceContainer.getServices() }
+  if (req.query && req.query.path) {
+    // get specific file
+    try{
+      const content = await cmsSettingService.getFile(req.query.path)
+      res.writeHead(200,{'Content-type':'image/jpg'});
+      res.end(content);
+    } catch(err) {
+      console.error("Can't get file")
+      res.status(500).body({"error": "can't get file"})
+    }
+    return
+  }
+
   cmsSettingService.getAssetList().then(data => {
     res.json(data)
   })
@@ -99,6 +119,7 @@ routes.post('/elm', verifyToken, (req, res) => {
 routes.post('/elm-meta', verifyToken, (req, res) => {
   // const { cmsSettingService } = { ...ServiceContainer.getServices() }
   const reqModel = new ReqModel()
+  // TODO elm-meta feature
   reqModel.body = req.body
   res.json({})
 })
@@ -119,6 +140,14 @@ routes.post('/main-content-pics', verifyToken, (req, res) => {
 })
 
 /*
+ * Get webpages
+ */
+routes.get('/pages', verifyToken, (req, res) => {
+  const { cmsSettingService } = { ...ServiceContainer.getServices() }
+  res.json(cmsSettingService.getWebPages())
+})
+
+/*
  * Create new webpage
  */
 routes.post('/pages', verifyToken, (req, res) => {
@@ -129,6 +158,20 @@ routes.post('/pages', verifyToken, (req, res) => {
   } else {
     res.status(201).json({})
   }
+})
+
+/*
+ * Update webpage
+ */
+routes.put('/pages', verifyToken, (req, res) => {
+  const { cmsSettingService } = { ...ServiceContainer.getServices() }
+  const result = cmsSettingService.updateWebPage(req.body)
+  if (result.err) {
+    res.status(500).json(result.err)
+    return
+  }
+
+  res.json(result)
 })
 
 export default routes

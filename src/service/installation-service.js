@@ -3,7 +3,7 @@ import { AppSetting_DB_KEY } from '../model/app-setting'
 import { ConfigContainer } from '../config/container'
 import { WebElm } from '../model/web-elm'
 import { DB_WEB_ELMS } from '../constants/db-keys'
-import { WEB_ELM_TYPES, MAIN_BANNER } from '../constants/default-web-elm'
+import { WEB_ELM_TYPES, MAIN_BANNER, FOOTER } from '../constants/default-web-elm'
 import bcrypt from 'bcryptjs'
 
 
@@ -43,6 +43,30 @@ export default class InstallationService {
     }
     mainBanner.name = MAIN_BANNER
     mainBanner.type = WEB_ELM_TYPES.JSON
+    mainBanner.isNative = true
     db.set(DB_WEB_ELMS, [mainBanner]).write()
+
+    const footer = new WebElm()
+    footer.name = FOOTER
+    footer.data = {
+      text: "Copyright 2021",
+      menus: [{
+        name: "Contact",
+        subMenus : [
+          {
+            order: 1,
+            name: "Sales",
+            link: "/sales"
+          },
+          {
+            order: 2,
+            name: "Office",
+            link: "/office"
+          }
+        ]
+      }]
+    }
+    mainBanner.type = WEB_ELM_TYPES.JSON
+    footer.isNative = true
   }
 }

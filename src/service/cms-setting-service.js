@@ -9,7 +9,7 @@ import fs from 'fs'
 import jsonschema from 'jsonschema'
 import { ReqModel } from '../model/req-model'
 import { ResModel } from '../model/res-model'
-import { WebPage, WebPageReq, webPageReqSchema } from '../model/web-page'
+import { WebPage, webPageReqSchema } from '../model/web-page'
 
 const assetPath = "asset/"
 
@@ -155,8 +155,8 @@ export default class CmsSettingService extends ServiceAbstract {
 
   }
 
-  getFile() {
-    
+  async getFile(path) {
+    return await fs.promises.readFile('asset/' + path)
   }
 
   updateMainPics(mainPicsReq) {
@@ -181,6 +181,11 @@ export default class CmsSettingService extends ServiceAbstract {
     this.db.set(`${MainInfo_DB_KEY}.navbar`, navbarData).write()
   }
 
+  getWebPages() {
+    const pages = this.db.get(DB_WEB_PAGES).value()
+    return pages
+  }
+
   /*
    * Add webpage
    */
@@ -193,6 +198,16 @@ export default class CmsSettingService extends ServiceAbstract {
       return validateResult.errors
     }
 
+    // validate data
+    const isPageExist = this._isPageExist(webPageReq.name)
+    if (isPageExist) {
+      return {
+        err: {
+          message: "Duplicated name"
+        }
+      }
+    }
+
     // prepare db
     const webEPagesDbSize = this.db.get(DB_WEB_PAGES).size().value()
     if (!webEPagesDbSize) {
@@ -201,6 +216,7 @@ export default class CmsSettingService extends ServiceAbstract {
 
     const webPage = new WebPage()
     webPage.name = webPageReq.name
+    webPage.tabTitle = webPageReq.tabTitle
     webPage.route = webPageReq.route
     webPage.elms = webPageReq.elms
 
@@ -212,7 +228,41 @@ export default class CmsSettingService extends ServiceAbstract {
   /*
    * Update webpage
    */
-  updateWebPage() {
-    
+  updateWebPage(updateReq) {
+    // validate schema
+    const v = new jsonschema.Validator()
+    const validateResult = v.validate(updateReq, webPageReqSchema)
+    if (validateResult.errors.length) {
+      console.error(validateResult.errors)
+      return { err: validateResult.errors }
+    }
+
+    // get current page
+    const webPage = this.db.get(DB_WEB_PAGES).find({
+      name: updateReq.name
+    })
+
+    if (!webPage.value()) {
+      return { err: { message : 'page not found' } }
+    }
+
+    // update page
+    const updatedWebPage = Object.assign(new WebPage(), webPage.value())
+    updatedWebPage.route = updateReq.route
+    updatedWebPage.elms = updateReq.elms
+    updatedWebPage.tabTitle = updateReq.tabTitle
+    webPage.assign(updatedWebPage).write()
+    return { updated : [updatedWebPage.name] }
+  }
+
+  _isPageExist(name) {
+    const webPageDb = this.db.get(DB_WEB_PAGES).find({
+      name : name
+    })
+
+    if (webPageDb.value()) {
+      return true
+    }
+    return false
   }
 }

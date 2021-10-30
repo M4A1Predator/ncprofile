@@ -4,6 +4,7 @@ export class WebElm {
     this.meta = undefined
     this.data = undefined
     this.type = undefined
+    this.isNative = false
   }
 }
 

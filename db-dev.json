@@ -11,6 +11,12 @@
         "text": "Power of Lightweight"
       },
       "type": "JSON"
+    },
+    {
+      "name": "customers_showcase",
+      "data": [],
+      "type": "JSON",
+      "isNative": false
     }
   ],
   "mainInfo": {
@@ -39,7 +45,7 @@
     },
     {
       "name": "GER Goods",
-      "route": "/ger"
+      "route": "/gerS"
     }
   ]
 }
