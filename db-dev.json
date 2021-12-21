@@ -36,6 +36,7 @@
         }
       ]
     },
+    "favicon": "favicon.ico",
     "logo": "hello.png"
   },
   "web_pages": [

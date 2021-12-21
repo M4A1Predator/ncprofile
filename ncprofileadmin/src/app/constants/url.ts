@@ -10,5 +10,7 @@ export const URLs = {
   updateMainContentInfo: `${PREFIX}main-content-info`,
 
   mainPics: `${PREFIX}cms-setting/main-content-pics`,
-  assets: `${PREFIX}cms-setting/files`
+  assets: `${PREFIX}cms-setting/files`,
+
+  elm: `${PREFIX}cms-setting/elm`,
 };

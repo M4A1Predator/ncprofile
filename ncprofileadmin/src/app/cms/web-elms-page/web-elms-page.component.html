@@ -1,0 +1,32 @@
+<app-layout>
+    <app-navbar></app-navbar>
+    <div class="container">
+      <div class="row">
+        <h2>Content</h2>
+      </div>
+      <div class="new-asset">
+        <button class="btn btn-primary">Add</button>
+      </div>
+      <hr />
+      <div class="elms-list">
+        <h2>List</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let welm of webElms; index as i">
+              <td>
+                <span style="cursor: pointer;" (click)="selectWebElm(welm.name)">{{welm.name}}</span>
+              </td>
+              <td>{{welm.type}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+  </app-layout>

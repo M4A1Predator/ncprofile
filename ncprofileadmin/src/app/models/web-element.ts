@@ -4,4 +4,5 @@ export class WebElement {
   public name: string;
   public type: WebElementTypeEnum;
   public content: string;
+  public data: string;
 }

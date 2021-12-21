@@ -59,7 +59,7 @@ routes.post('/files', verifyToken, (req, res) => {
 })
 
 /*
- * Get files list
+ * Get files list / File
  */
 routes.get('/files', verifyToken, async (req, res) => {
   const { cmsSettingService } = { ...ServiceContainer.getServices() }
@@ -124,6 +124,9 @@ routes.post('/elm-meta', verifyToken, (req, res) => {
   res.json({})
 })
 
+/*
+ * Get elements
+ */
 routes.get('/elm', verifyToken, (req, res) => {
   const { cmsSettingService } = { ...ServiceContainer.getServices() }
   res.json(cmsSettingService.getWebElm())
@@ -131,6 +134,12 @@ routes.get('/elm', verifyToken, (req, res) => {
 
 routes.post('/main-content-pics', verifyToken, (req, res) => {
   const { cmsSettingService } = { ...ServiceContainer.getServices() }
+
+  // validate body
+  if (!req.body || (!req.body.logoPath && !req.body.faviconPath)) {
+    res.status(400).json({ "message": "logoPath or faviconPath is required" })
+  }
+
   const err = cmsSettingService.updateMainPics(req.body)
   if (err) {
     res.status(400, err)

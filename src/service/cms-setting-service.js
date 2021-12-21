@@ -161,8 +161,14 @@ export default class CmsSettingService extends ServiceAbstract {
 
   updateMainPics(mainPicsReq) {
     const mainInfo = this.db.get(MainInfo_DB_KEY).value()
-    mainInfo.logo = mainPicsReq.logoPath
-    mainInfo.favicon = mainPicsReq.faviconPath
+    if (mainPicsReq.logoPath) {
+      mainInfo.logo = mainPicsReq.logoPath
+    }
+
+    if (mainPicsReq.faviconPath) {
+      mainInfo.favicon = mainPicsReq.faviconPath
+    }
+    
     this.db.set(MainInfo_DB_KEY, mainInfo).write()
   }
 

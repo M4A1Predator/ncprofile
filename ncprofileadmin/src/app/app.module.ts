@@ -14,6 +14,8 @@ import { ElementTextboxComponent } from './cms/components/element-textbox/elemen
 import { LoginComponent } from './auth/login/login.component';
 import { AssetsPageComponent } from './cms/assets-page/assets-page.component';
 import { SelectAssetModalComponent } from './cms/components/select-asset-modal/select-asset-modal.component';
+import { WebElmsPageComponent } from './cms/web-elms-page/web-elms-page.component';
+import { WebElmAddPageComponent } from './cms/web-elm-add-page/web-elm-add-page.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { SelectAssetModalComponent } from './cms/components/select-asset-modal/s
     ElementTextboxComponent,
     LoginComponent,
     AssetsPageComponent,
-    SelectAssetModalComponent
+    SelectAssetModalComponent,
+    WebElmsPageComponent,
+    WebElmAddPageComponent
   ],
   imports: [
     BrowserModule,

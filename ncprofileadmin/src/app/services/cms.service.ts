@@ -70,4 +70,14 @@ export class CmsService {
     const options = this.authService.getAuthHeaderValue();
     return this.http.post(`${this.apiService.getServerUrl()}${URLs.assets}`, formData, options);
   }
+
+  getFile(path: string): Observable<Blob> {
+    const options = { ...this.authService.getAuthHeaderValue(), responseType: 'blob' }
+    return this.http.get(`${this.apiService.getServerUrl()}${URLs.assets}?path=${path}`, options) as any
+  }
+
+  getWebElms(): Observable<any> {
+    const options = this.authService.getAuthHeaderValue();
+    return this.http.get(`${this.apiService.getServerUrl()}${URLs.elm}`, options)
+  }
 }
