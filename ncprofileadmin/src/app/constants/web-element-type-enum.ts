@@ -1,5 +1,5 @@
 export enum WebElementTypeEnum {
-  JSON,
-  Text,
-  HTML
+  JSON="JSON",
+  TEXT="TEXT",
+  HTML="HTML"
 }

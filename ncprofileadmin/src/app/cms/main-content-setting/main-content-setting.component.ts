@@ -70,7 +70,7 @@ export class MainContentSettingComponent implements OnInit, OnDestroy {
           this.currentLogoPath = data.logo
           this.currentFaviconPath = data.favicon
           if (data.navbar && data.navbar.data) {
-            this.navbar.content = data.navbar.data;
+            this.navbar.data = data.navbar.data;
           }
           return of(data);
         }),
@@ -126,7 +126,7 @@ export class MainContentSettingComponent implements OnInit, OnDestroy {
       websiteName,
       title: websiteName,
       tabTitle,
-      navbar: this.navbar.content
+      navbar: this.navbar.data
     } as MainWebInfoReq;
 
     // update

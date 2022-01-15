@@ -6,6 +6,7 @@ import { URLs } from '../constants/url';
 import { AssetFile } from '../models/asset-file';
 import { MainPicsReq } from '../models/main-pics';
 import { MainWebInfoReq } from '../models/main-web-info';
+import { WebElement } from '../models/web-element';
 import { ApiService } from './api.service';
 import { AuthService } from './auth.service';
 
@@ -79,5 +80,13 @@ export class CmsService {
   getWebElms(): Observable<any> {
     const options = this.authService.getAuthHeaderValue();
     return this.http.get(`${this.apiService.getServerUrl()}${URLs.elm}`, options)
+  }
+
+  addWebElm(webElm: WebElement): Observable<any> {
+    const options = this.authService.getAuthHeaderValue();
+    const data = [
+      webElm
+    ]
+    return this.http.post(`${this.apiService.getServerUrl()}${URLs.elm}`, data, options)
   }
 }

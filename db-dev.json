@@ -17,6 +17,14 @@
       "data": [],
       "type": "JSON",
       "isNative": false
+    },
+    {
+      "name": "trest",
+      "data": {
+        "test": 1
+      },
+      "type": "JSON",
+      "isNative": false
     }
   ],
   "mainInfo": {
@@ -32,12 +40,12 @@
         },
         {
           "name": "About",
-          "link": "/ "
+          "link": "/"
         }
       ]
     },
-    "favicon": "favicon.ico",
-    "logo": "hello.png"
+    "logo": "hello.png",
+    "favicon": "favicon.ico"
   },
   "web_pages": [
     {
