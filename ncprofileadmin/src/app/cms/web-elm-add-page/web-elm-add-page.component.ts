@@ -64,7 +64,6 @@ export class WebElmAddPageComponent implements OnInit {
     newWebElm.type = this.webElm.type
     newWebElm.data = this.webElm.data
 
-    console.log(newWebElm)
     this.cmsService.addWebElm(newWebElm).subscribe(res => {
       this.router.navigate(['/contents'])
     }) 

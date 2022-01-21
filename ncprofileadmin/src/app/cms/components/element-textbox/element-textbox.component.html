@@ -2,6 +2,6 @@
   <div>{{webElement.name}}</div>
   <div>
     <div id="{{elementId}}" *ngIf="webElement.type === 'JSON'"></div>
-    <textarea *ngIf="webElement.type === 'TEXT'" class="textarea" (change)="onChange($event)"></textarea>
+    <textarea *ngIf="webElement.type === 'TEXT'" class="textarea" (change)="onChange($event)">{{webElement.data}}</textarea>
   </div>
 </div>

@@ -120,7 +120,12 @@ export default class CmsSettingService extends ServiceAbstract {
     }
   }
 
-  getWebElm() {
+  getWebElm(query) {
+    if (query.name) {
+      return this.db.get(DB_WEB_ELMS).find({
+        name: query.name
+      }).value()
+    }
     return this.db.get(DB_WEB_ELMS).value()
   }
 

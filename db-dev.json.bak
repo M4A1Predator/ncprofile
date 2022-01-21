@@ -1,0 +1,76 @@
+{
+  "appSetting": {
+    "isInstalled": true,
+    "user": "admin",
+    "password": "$2a$10$vJOFM9GX0UDPFg.8CDPccuJusmEFZgoa3f1XXNrM7/IjIxOam6N.W"
+  },
+  "web_elms": [
+    {
+      "name": "MAIN_BANNER",
+      "data": {
+        "text": "Power of Lightweight"
+      },
+      "type": "JSON"
+    },
+    {
+      "name": "customers_showcase",
+      "data": "{\"zxc\":\"zx\"}",
+      "type": "JSON",
+      "isNative": false
+    },
+    {
+      "name": "trest",
+      "data": {
+        "test": 1
+      },
+      "type": "JSON",
+      "isNative": false
+    }
+  ],
+  "mainInfo": {
+    "websiteName": "Hello",
+    "title": "Hello",
+    "tabTitle": "Hello",
+    "navbar": {
+      "meta": {},
+      "data": [
+        {
+          "name": "Home",
+          "link": "/"
+        },
+        {
+          "name": "About",
+          "link": "/"
+        }
+      ]
+    },
+    "logo": "hello.png",
+    "favicon": "favicon.ico"
+  },
+  "web_pages": [
+    {
+      "name": "Korean Goods",
+      "route": "/kor"
+    },
+    {
+      "name": "GER Goods",
+      "route": "/gerS"
+    }
+  ],
+  "web_messages": [
+    {
+      "lang": "EN",
+      "messages": [
+        "Test",
+        {
+          "key": "POWER_1",
+          "value": "Test2"
+        },
+        {
+          "key": "POWER_2",
+          "value": "Test2"
+        }
+      ]
+    }
+  ]
+}

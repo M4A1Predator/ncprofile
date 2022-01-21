@@ -82,6 +82,11 @@ export class CmsService {
     return this.http.get(`${this.apiService.getServerUrl()}${URLs.elm}`, options)
   }
 
+  getWebElmByName(name): Observable<any> {
+    const options = this.authService.getAuthHeaderValue();
+    return this.http.get(`${this.apiService.getServerUrl()}${URLs.elm}?name=${name}`, options)
+  }
+
   addWebElm(webElm: WebElement): Observable<any> {
     const options = this.authService.getAuthHeaderValue();
     const data = [

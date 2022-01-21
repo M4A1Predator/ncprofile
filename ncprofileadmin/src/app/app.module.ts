@@ -16,6 +16,8 @@ import { AssetsPageComponent } from './cms/assets-page/assets-page.component';
 import { SelectAssetModalComponent } from './cms/components/select-asset-modal/select-asset-modal.component';
 import { WebElmsPageComponent } from './cms/web-elms-page/web-elms-page.component';
 import { WebElmAddPageComponent } from './cms/web-elm-add-page/web-elm-add-page.component';
+import { EditElmPageComponent } from './cms/edit-elm-page/edit-elm-page.component';
+import { WebElmEditPageComponent } from './cms/web-elm-edit-page/web-elm-edit-page.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { WebElmAddPageComponent } from './cms/web-elm-add-page/web-elm-add-page.
     AssetsPageComponent,
     SelectAssetModalComponent,
     WebElmsPageComponent,
-    WebElmAddPageComponent
+    WebElmAddPageComponent,
+    EditElmPageComponent,
+    WebElmEditPageComponent
   ],
   imports: [
     BrowserModule,

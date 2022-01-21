@@ -6,6 +6,7 @@ import { webEmlReqSchema, webEmlSchema } from '../../../model/web-elm'
 import jsonschema from 'jsonschema'
 import { ReqModel } from '../../../model/req-model'
 import { ResModel } from '../../../model/res-model'
+import { WebMessage, webMessageSchema } from '../../../model/language-message'
 
 const routes = express.Router()
 
@@ -129,7 +130,15 @@ routes.post('/elm-meta', verifyToken, (req, res) => {
  */
 routes.get('/elm', verifyToken, (req, res) => {
   const { cmsSettingService } = { ...ServiceContainer.getServices() }
-  res.json(cmsSettingService.getWebElm())
+  const filter = {
+    name: req.query.name
+  }
+  const data = cmsSettingService.getWebElm(filter)
+  if (data === undefined) {
+    res.status(404).json({"message": "Not found"})
+    return
+  }
+  res.json(data)
 })
 
 routes.post('/main-content-pics', verifyToken, (req, res) => {
@@ -181,6 +190,66 @@ routes.put('/pages', verifyToken, (req, res) => {
   }
 
   res.json(result)
+})
+
+/*
+ * Get languages
+ */
+routes.get('/langs', verifyToken, (req, res) => {
+  const { translatorService } = { ...ServiceContainer.getServices() }
+  res.json(translatorService.getLanguages())
+})
+
+/*
+ * Add language
+ */
+routes.post('/langs', verifyToken, (req, res) => {
+
+  // validate schema
+  if (!req.body || !req.body.name || !req.body.name.trim()) {
+    res.status(400).json({ err: "name is required" })
+    return
+  }
+
+  // update language
+  const { translatorService } = { ...ServiceContainer.getServices() }
+  const lang = translatorService.addLanguage(req.body)
+  res.json(lang)
+})
+
+/*
+ * Get messages
+ */
+routes.get('/langs/:langName/messages', verifyToken, (req, res) => {
+  const { translatorService } = { ...ServiceContainer.getServices() }
+  const lang = translatorService.getMessages(req.params.langName)
+  if (!lang) {
+    res.status(404).type({ "message" : `${req.params.langName} not found` })
+  }
+  res.json(lang)
+})
+
+/*
+ * Add message
+ */
+routes.post('/langs/:langName/messages', verifyToken, (req, res) => {
+  // validate schema
+  const v = new jsonschema.Validator();
+  v.addSchema(webMessageSchema)
+  const validateResult = v.validate(req.body, webMessageSchema)
+  if (validateResult.errors.length) {
+    res.json({
+      err: validateResult.errors
+    })
+    return;
+  }
+
+  // update messages data
+  const { translatorService } = { ...ServiceContainer.getServices() }
+  const webMessage = new WebMessage()
+  webMessage.instance(req.body)
+  translatorService.updateMessage(req.params.langName, webMessage)
+  res.json({ "message" : "updated" })
 })
 
 export default routes

@@ -2,59 +2,52 @@
   "appSetting": {
     "isInstalled": true,
     "user": "admin",
-    "password": "$2a$10$vJOFM9GX0UDPFg.8CDPccuJusmEFZgoa3f1XXNrM7/IjIxOam6N.W"
+    "password": "$2a$10$z/FxNY/q4J08za/c6et9nOY/5IhRHmgU4MXXlo/pa8HYYbb5JUmAe"
   },
   "web_elms": [
     {
       "name": "MAIN_BANNER",
-      "data": {
-        "text": "Power of Lightweight"
-      },
-      "type": "JSON"
+      "data": "{\"text\":\"Power of Lightweight\"}",
+      "type": "JSON",
+      "isNative": true
     },
     {
-      "name": "customers_showcase",
-      "data": [],
+      "name": "test",
+      "data": "{\"a\":\"12\"}",
       "type": "JSON",
       "isNative": false
     },
     {
-      "name": "trest",
-      "data": {
-        "test": 1
-      },
-      "type": "JSON",
+      "name": "About1",
+      "data": "ZXCV",
+      "type": "TEXT",
       "isNative": false
+    }
+  ],
+  "web_messages": [
+    {
+      "lang": "EN",
+      "messages": []
+    },
+    {
+      "lang": "TH",
+      "messages": []
     }
   ],
   "mainInfo": {
     "websiteName": "Hello",
     "title": "Hello",
-    "tabTitle": "Hello",
+    "tabTitle": "Welcome",
     "navbar": {
       "meta": {},
       "data": [
         {
           "name": "Home",
           "link": "/"
-        },
-        {
-          "name": "About",
-          "link": "/"
         }
       ]
     },
     "logo": "hello.png",
     "favicon": "favicon.ico"
-  },
-  "web_pages": [
-    {
-      "name": "Korean Goods",
-      "route": "/kor"
-    },
-    {
-      "name": "GER Goods",
-      "route": "/gerS"
-    }
-  ]
+  }
 }

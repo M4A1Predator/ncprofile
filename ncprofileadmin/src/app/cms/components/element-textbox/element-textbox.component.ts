@@ -39,11 +39,17 @@ export class ElementTextboxComponent implements OnInit {
       const options = {
           mode: 'code',
           onChange: () => {
-            this.webElement.data = this.editor.get();
+            this.webElement.data = JSON.stringify(this.editor.get());
           }
       };
       this.editor = new JSONEditor(container, options);
-      this.editor.set(!!this.webElement.data ? this.webElement.data : {});
+
+      // set initial data
+      let initData = {}
+      if (!!this.webElement.data) {
+        initData = typeof(this.webElement.data) === 'string' ? JSON.parse(this.webElement.data) : this.webElement.data
+      }
+      this.editor.set(initData);
     }, 1000);
   }
 

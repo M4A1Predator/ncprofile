@@ -2,9 +2,10 @@ import { AppSetting } from '../model/app-setting'
 import { AppSetting_DB_KEY } from '../model/app-setting'
 import { ConfigContainer } from '../config/container'
 import { WebElm } from '../model/web-elm'
-import { DB_WEB_ELMS } from '../constants/db-keys'
+import { DB_WEB_ELMS, DB_WEB_MESSAGES } from '../constants/db-keys'
 import { WEB_ELM_TYPES, MAIN_BANNER, FOOTER } from '../constants/default-web-elm'
 import bcrypt from 'bcryptjs'
+import { LanguageMessage } from '../model/language-message'
 
 
 export default class InstallationService {
@@ -38,14 +39,24 @@ export default class InstallationService {
 
     // save basic data
     const mainBanner = new WebElm()
-    mainBanner.data = {
+    mainBanner.data = JSON.stringify({
       "text": "Power of Lightweight"
-    }
+    })
     mainBanner.name = MAIN_BANNER
     mainBanner.type = WEB_ELM_TYPES.JSON
     mainBanner.isNative = true
     db.set(DB_WEB_ELMS, [mainBanner]).write()
 
+    // save languages
+    const enLang = new LanguageMessage();
+    enLang.lang = "EN"
+    enLang.messages = []
+    const thLang = new LanguageMessage();
+    thLang.lang = "TH"
+    thLang.messages = []
+    db.set(DB_WEB_MESSAGES, [enLang, thLang]).write()
+
+    // save footer
     const footer = new WebElm()
     footer.name = FOOTER
     footer.data = {

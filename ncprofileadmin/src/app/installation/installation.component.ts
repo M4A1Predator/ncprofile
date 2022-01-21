@@ -49,7 +49,7 @@ export class InstallationComponent implements OnInit {
     this.adminAccount.password = this.accountForm.value.password;
 
     this.installationService.firstInstall(this.adminAccount).subscribe(res => {
-      this.route.navigate(['main-content']);
+      this.route.navigate(['/login']);
     });
   }
 

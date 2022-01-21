@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { WebElement } from 'src/app/models/web-element';
 import { CmsService } from 'src/app/services/cms.service';
@@ -13,7 +14,8 @@ export class WebElmsPageComponent implements OnInit, OnDestroy {
   private subs: Subscription = new Subscription();
   webElms: WebElement[] = [];
 
-  constructor(private cmsService: CmsService) { }
+  constructor(private cmsService: CmsService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.subs.add(
@@ -28,7 +30,7 @@ export class WebElmsPageComponent implements OnInit, OnDestroy {
   }
 
   selectWebElm(name: string){
-    console.log(name)
+    this.router.navigate(["/contents", name])
   }
 
 }
