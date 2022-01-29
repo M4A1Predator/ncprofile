@@ -13,4 +13,6 @@ export const URLs = {
   assets: `${PREFIX}cms-setting/files`,
 
   elm: `${PREFIX}cms-setting/elm`,
+
+  languages: `${PREFIX}cms-setting/langs`
 };

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { AssetsPageComponent } from './cms/assets-page/assets-page.component';
+import { LanguageMessagesPageComponent } from './cms/language-messages-page/language-messages-page.component';
 import { MainContentSettingComponent } from './cms/main-content-setting/main-content-setting.component';
 import { WebElmAddPageComponent } from './cms/web-elm-add-page/web-elm-add-page.component';
 import { WebElmEditPageComponent } from './cms/web-elm-edit-page/web-elm-edit-page.component';
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'assets', component: AssetsPageComponent, canActivate: [AuthGuard] },
   { path: 'contents', component: WebElmsPageComponent, canActivate: [AuthGuard]},
   { path: 'contents/add', component: WebElmAddPageComponent, canActivate: [AuthGuard]},
-  { path: 'contents/:elmName', component: WebElmEditPageComponent, canActivate: [AuthGuard]}
+  { path: 'contents/:elmName', component: WebElmEditPageComponent, canActivate: [AuthGuard]},
+  { path: 'langs', component: LanguageMessagesPageComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

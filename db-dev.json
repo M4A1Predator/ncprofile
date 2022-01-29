@@ -27,11 +27,33 @@
   "web_messages": [
     {
       "lang": "EN",
-      "messages": []
+      "messages": [
+        {
+          "key": "POWER_1",
+          "value": "Test2"
+        },
+        {
+          "key": "shoq1",
+          "value": "asdzx zxcxzc"
+        },
+        {
+          "key": "rouge1",
+          "value": "Rouge One"
+        },
+        {
+          "key": "show1",
+          "value": "show1"
+        }
+      ]
     },
     {
       "lang": "TH",
-      "messages": []
+      "messages": [
+        {
+          "key": "rouge1",
+          "value": "โร๊ค"
+        }
+      ]
     }
   ],
   "mainInfo": {

@@ -1,0 +1,57 @@
+<app-layout>
+    <app-navbar></app-navbar>
+    <div class="container">
+        <div class="row">
+            <h2>Languages</h2>
+        </div>
+        <div class="row">
+            <div>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#AddWebMessageModal">Add Message</button>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label">Search</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" />
+                    </div>
+                    <label for="" class="col-sm-2 col-form-label">Langauge</label>
+                    <div class="col-sm-2">
+                        <select class="form-control">
+                            <option>ALL</option>
+                            <option>EN</option>
+                            <option>TH</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-primary" type="button">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">key</th>
+                        <th scope="col">langauge</th>
+                        <th scope="col">text</th>
+                        <th scope="col">edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let webMsg of webMessages; index as i">
+                        <td>{{webMsg.key}}</td>
+                        <td>{{webMsg.language}}</td>
+                        <td>{{webMsg.value}}</td>
+                        <td><button class="btn btn-primary btn-sm">Edit</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <app-add-web-message-modal [selectableLanguages]="selectableLanguages"
+        (addMessage)="onAddMessage($event)"></app-add-web-message-modal>
+</app-layout>
