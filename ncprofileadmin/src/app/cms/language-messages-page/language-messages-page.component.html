@@ -46,7 +46,7 @@
                         <td>{{webMsg.key}}</td>
                         <td>{{webMsg.language}}</td>
                         <td>{{webMsg.value}}</td>
-                        <td><button class="btn btn-primary btn-sm">Edit</button></td>
+                        <td><button class="btn btn-primary btn-sm" type="button" (click)="onSelectWebMessage(webMsg)">Edit</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -54,4 +54,6 @@
     </div>
     <app-add-web-message-modal [selectableLanguages]="selectableLanguages"
         (addMessage)="onAddMessage($event)"></app-add-web-message-modal>
+    <app-edit-web-message-modal [selectableLanguages]="selectableLanguages" [webMessage]="selectedWebMessage"
+        (editMessage)="onEditMessage($event)"></app-edit-web-message-modal>
 </app-layout>

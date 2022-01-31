@@ -5,6 +5,9 @@ import { compareText } from 'src/app/helpers/text-helper';
 import { LanguageData, WebMessage } from 'src/app/models/web-message';
 import { MessageTranslatorService } from 'src/app/services/message-translator.service';
 import { AddWebMessageModalComponent } from './add-web-message-modal/add-web-message-modal.component';
+import { EditWebMessageModalComponent } from './edit-web-message-modal/edit-web-message-modal.component';
+
+declare const $: any
 
 @Component({
   selector: 'app-language-messages-page',
@@ -16,9 +19,11 @@ export class LanguageMessagesPageComponent implements OnInit, OnDestroy {
   private subs: Subscription = new Subscription()
 
   webMessages: WebMessage[] = []
+  selectedWebMessage: WebMessage = null
   selectableLanguages: string[] = []
 
   @ViewChild(AddWebMessageModalComponent) addModal:AddWebMessageModalComponent
+  @ViewChild(EditWebMessageModalComponent) editModal:AddWebMessageModalComponent
 
   constructor(private msgTranslator: MessageTranslatorService) { }
 
@@ -50,6 +55,18 @@ export class LanguageMessagesPageComponent implements OnInit, OnDestroy {
     this.msgTranslator.addWebMessage(webMessage).pipe(take(1)).subscribe(res => {
       this.loadLanguageData()
       this.addModal.onSaveSuccess()
+    })
+  }
+
+  onSelectWebMessage(webMsg): void {
+    this.selectedWebMessage = webMsg
+    $('#EditWebMessageModal').modal('show')
+  }
+
+  onEditMessage(webMessage: WebMessage): void {
+    this.msgTranslator.updateWebMessage(webMessage).pipe(take(1)).subscribe(res => {
+      this.loadLanguageData()
+      this.editModal.onSaveSuccess()
     })
   }
 

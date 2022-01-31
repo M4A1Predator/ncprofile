@@ -20,6 +20,7 @@ import { EditElmPageComponent } from './cms/edit-elm-page/edit-elm-page.componen
 import { WebElmEditPageComponent } from './cms/web-elm-edit-page/web-elm-edit-page.component';
 import { LanguageMessagesPageComponent } from './cms/language-messages-page/language-messages-page.component';
 import { AddWebMessageModalComponent } from './cms/language-messages-page/add-web-message-modal/add-web-message-modal.component';
+import { EditWebMessageModalComponent } from './cms/language-messages-page/edit-web-message-modal/edit-web-message-modal.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AddWebMessageModalComponent } from './cms/language-messages-page/add-we
     EditElmPageComponent,
     WebElmEditPageComponent,
     LanguageMessagesPageComponent,
-    AddWebMessageModalComponent
+    AddWebMessageModalComponent,
+    EditWebMessageModalComponent
   ],
   imports: [
     BrowserModule,

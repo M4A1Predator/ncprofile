@@ -2,6 +2,7 @@ const PREFIX = '/api/admin/';
 
 export const URLs = {
   requestToken: `${PREFIX}token`,
+  verifyToken: `${PREFIX}token/verify`,
 
   getAppSetting: `${PREFIX}appConfig`,
   install: `${PREFIX}install`,

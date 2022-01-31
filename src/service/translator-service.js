@@ -54,7 +54,7 @@ export default class TranslatorService extends ServiceAbstract {
 
         // update/insert
         if (indexToUpdate > -1) {
-            lang.messages[indexToUpdate] = webMessage.value
+            lang.messages[indexToUpdate] = webMessage
         } else {
             lang.messages.push(webMessage)
         }

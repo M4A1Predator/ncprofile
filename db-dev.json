@@ -22,6 +22,12 @@
       "data": "ZXCV",
       "type": "TEXT",
       "isNative": false
+    },
+    {
+      "name": "Product_info",
+      "data": "HELLOX",
+      "type": "TEXT",
+      "isNative": false
     }
   ],
   "web_messages": [
@@ -51,7 +57,7 @@
       "messages": [
         {
           "key": "rouge1",
-          "value": "โร๊ค"
+          "value": "โร๊ค วัน"
         }
       ]
     }

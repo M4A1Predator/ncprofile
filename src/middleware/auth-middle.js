@@ -5,7 +5,7 @@ export const verifyToken = (req, res, next) => {
 
   // verify
   jwt.verify(accessToken, 'the_secret', (err, decoded) => {
-    console.log(decoded)
+    // console.log(decoded)
     if (err) {
       res.sendStatus(401)
       return

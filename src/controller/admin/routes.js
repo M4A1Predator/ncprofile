@@ -4,6 +4,7 @@ import { ConfigContainer } from '../../config/container'
 import { ServiceContainer } from '../../service/container'
 import cmsRoutes from './cms-setting/cms-setting'
 import jwt from 'jsonwebtoken'
+import { verifyToken } from '../../middleware/auth-middle'
 
 const adminRoutes = express.Router()
 
@@ -44,6 +45,10 @@ adminRoutes.post('/token', (req, res) => {
   res.json({
     accessToken: token
   })
+})
+
+adminRoutes.get('/token/verify', verifyToken, (req, res) => {
+  res.status(200).send()
 })
 
 adminRoutes.use('/cms-setting', [cmsRoutes])

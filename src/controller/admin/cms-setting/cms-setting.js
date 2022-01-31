@@ -248,6 +248,7 @@ routes.post('/langs/:langName/messages', verifyToken, (req, res) => {
   const { translatorService } = { ...ServiceContainer.getServices() }
   const webMessage = new WebMessage()
   webMessage.instance(req.body)
+  console.log(webMessage)
   translatorService.updateMessage(req.params.langName, webMessage)
   res.json({ "message" : "updated" })
 })
